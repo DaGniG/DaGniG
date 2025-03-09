@@ -227,4 +227,21 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  document.querySelector("form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    var form = this;
+    fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => response.json()).then(data => {
+      if (data.ok) {
+        alert("Your message has been sent successfully!"); // Custom success message
+        form.reset(); // Clears the form
+      } else {
+        alert("Oops! Something went wrong. Please try again.");
+      }
+    }).catch(error => alert("Error: " + error));
+  });
+
 })();
